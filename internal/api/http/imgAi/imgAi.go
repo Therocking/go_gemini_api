@@ -6,7 +6,7 @@ import (
 	"io"
 	"net/http"
 
-	watchimgs "githup.com/Therocking/go_gemini/pkg/watchImgs"
+	watchimgs "githup.com/Therocking/go_gemini/internal/util/watchImgs"
 )
 
 type ErrMsg struct {

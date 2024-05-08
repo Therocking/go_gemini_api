@@ -11,6 +11,8 @@ import (
 
 func WatchImgs(file []byte) *genai.GenerateContentResponse {
 	ctx := context.Background()
+
+	// Create a new gemini client
 	client, err := genai.NewClient(ctx, option.WithAPIKey(os.Getenv("GEMINI_API_KEY")))
 	if err != nil {
 		log.Fatal(err)
@@ -21,23 +23,13 @@ func WatchImgs(file []byte) *genai.GenerateContentResponse {
 	model := client.GenerativeModel("gemini-pro-vision")
 	model.SetTemperature(1)
 
-	// wd, err := os.Getwd()
-	// if err != nil {
-	// 	fmt.Println("Error al obtener el directorio de trabajo actual:", err)
-	// 	return
-	// }
-
-	// Select the image to use
-	// img, err := os.ReadFile(fmt.Sprintf("%s/%s", wd, "/imgs/landscape.png"))
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-
+	// Prompt to the ai, for generate the response
 	prompt := []genai.Part{
 		genai.ImageData("png", file),
 		genai.Text("Describe this img"),
 	}
 
+	// Response from the ai
 	resp, err := model.GenerateContent(ctx, prompt...)
 	if err != nil {
 		log.Fatal(err)
